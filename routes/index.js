@@ -1,0 +1,15 @@
+const express = require('express');
+
+const router = express.Router();
+
+/* GET home page. */
+router.get('/', (req, res) => {
+  res.render('index', { user: req.user || {} });
+});
+
+/* GET repo page. */
+router.get('/repo', (req, res) => {
+  res.render('index', { user: req.user || {} });
+});
+
+module.exports = router;
