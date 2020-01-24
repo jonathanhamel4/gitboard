@@ -9,7 +9,7 @@ export default function Navigation() {
   const matchRepo = useRouteMatch({ path: '/repo', strict: true, sensitive: true });
 
   return (
-    <Segment inverted vertical>
+    <Segment as="header" inverted vertical>
       <Container>
         <Menu pointing inverted secondary size="large">
           <Menu.Item as={Link} to="/" active={!matchRepo}>GitBoard</Menu.Item>

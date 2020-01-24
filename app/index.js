@@ -10,14 +10,18 @@ import 'react-semantic-toasts/styles/react-semantic-alert.css';
 import Home from './views/Home';
 import Repositories from './views/Repositories';
 import Navigation from './components/Navigation';
+import Footer from './components/Footer';
 
 function App() {
   return (
     <BrowserRouter>
       <SemanticToastContainer />
       <Navigation />
-      <Route exact path="/" component={Home} />
-      <Route exact path="/repo" component={Repositories} />
+      <div className="body">
+        <Route exact path="/" component={Home} />
+        <Route exact path="/repo" component={Repositories} />
+      </div>
+      <Footer />
     </BrowserRouter>
   );
 }

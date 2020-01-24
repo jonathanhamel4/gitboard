@@ -1,3 +1,18 @@
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#app > .body {
+    flex-grow: 1;
+    padding-bottom: 20px;
+}
+
+.push-down-header {
+    padding-top: 20px;
+}
+
 .ui.inverted.segment.landing-segment {
     margin: 0;
     text-align: center;
@@ -10,10 +25,6 @@
     margin-bottom: 0em;
     font-size: 4em;
     font-weight: normal;
-}
-
-.push-down-header {
-    margin-top: 60px;
 }
 
 .filter-segment {
@@ -64,10 +75,6 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-}
-
-.ui.container.flex-container.main-flex-container {
-    /* font-size: 2em; */
 }
 
 .ui.container.flex-container.main-flex-container > i{
