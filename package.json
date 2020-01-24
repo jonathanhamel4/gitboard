@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon -w . -i users.json -i ./node_modules ./bin/www",
+    "start": "nodemon -w . -i app -i users.json -i ./node_modules ./bin/www",
     "build": "webpack",
     "lint": "eslint '**/**.js'"
   },

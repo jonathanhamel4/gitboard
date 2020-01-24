@@ -58,7 +58,26 @@
 .flex-filters-layout .ui.cards > .card.red > .content > .header {
     color: #db2828;
 }
-/* 
-.ui.secondary.pointing.menu .item {
-    align-self: unset;
-} */
+
+.ui.container.flex-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.ui.container.flex-container.main-flex-container {
+    /* font-size: 2em; */
+}
+
+.ui.container.flex-container.main-flex-container > i{
+    font-size: 10em;
+    margin-top: 1em;
+    flex: 1 1;
+}
+
+.ui.container.flex-container.main-flex-container > div {
+    padding: 1em;
+    flex: 1 0;
+    text-align: justify;
+}
