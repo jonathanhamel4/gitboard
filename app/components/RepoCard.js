@@ -38,6 +38,9 @@ const RepoCard = ({ repo }) => {
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
+        {`Updated ${moment(repo.updated_at).fromNow()}`}
+      </Card.Content>
+      <Card.Content extra>
         <Button
           onClick={showPulls}
           color="blue"
@@ -82,7 +85,8 @@ RepoCard.propTypes = {
     html_url: PropTypes.string,
     full_name: PropTypes.string,
     name: PropTypes.string,
-    pulls: PropTypes.array
+    pulls: PropTypes.array,
+    updated_at: PropTypes.string
   }).isRequired
 };
 
