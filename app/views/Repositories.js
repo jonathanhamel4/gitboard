@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Container, Segment, Card, Button, Checkbox, Divider
+  Container, Segment, Card, Button, Checkbox, Divider, Loader
 } from 'semantic-ui-react';
 import { toast } from 'react-semantic-toasts';
 
@@ -12,6 +12,7 @@ import SideFilter from '../components/SideFilter';
 export default function Repositories() {
   const [selectedOrganization, setSelectedOrganization] = useState(null);
   const [selectedTeam, setSelectedTeam] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [onlyUserRepo, setOnlyUserRepo] = useState(false);
 
@@ -88,16 +89,18 @@ export default function Repositories() {
     setOrgRepositories(data);
   }
 
-  function onSearch() {
+  async function onSearch() {
+    setIsLoading(true);
     setOrgRepositories([]);
     updateQueryString();
     if (onlyUserRepo) {
-      fetchUserRepositories();
+      await fetchUserRepositories();
     } else if (selectedTeam) {
-      fetchOrgTeamRepositories();
+      await fetchOrgTeamRepositories();
     } else if (selectedOrganization) {
-      fetchOrgRepositories();
+      await fetchOrgRepositories();
     }
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -142,6 +145,7 @@ export default function Repositories() {
 
         <Button onClick={onSearch}>Search</Button>
       </Segment>
+      <Loader size="large" active={isLoading}>Loading Repositories...</Loader>
       <div className="flex-filters-layout">
         <SideFilter repos={orgRepositories} orderedReposCb={setFilteredRepositories} />
         <div>

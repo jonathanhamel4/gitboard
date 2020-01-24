@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Icon, Header, Divider, Visibility, Transition } from 'semantic-ui-react';
+import {
+  Icon, Header, Divider, Visibility, Transition
+} from 'semantic-ui-react';
 import Landing from '../components/Landing';
 import FlexContainer from '../components/FlexContainer';
 
-const animation = 'fade right';
 const duration = 1500;
 export default function Home() {
   const [visible, setVisible] = useState(new Set());

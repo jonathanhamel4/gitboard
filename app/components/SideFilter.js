@@ -26,6 +26,7 @@ const SideFilter = ({ repos, orderedReposCb }) => {
   const [org, setOrg] = useState(null);
   const [selectedRepos, setSelectedRepos] = useState([]);
   const [count, setCount] = useState(0);
+  const [selectedPrMember, setSelectedPrMember] = useState(null);
 
 
   const [prByMember, setPrByMember] = useState([]);
@@ -38,14 +39,17 @@ const SideFilter = ({ repos, orderedReposCb }) => {
         if (repo.pulls && repo.pulls.length) {
           repo.pulls.forEach((pull) => {
             pull.requested_reviewers.forEach((reviewer) => {
-              prs[reviewer.login] = (prs[reviewer.login] || 0) + 1;
+              prs[reviewer.login] = (prs[reviewer.login] || []);
+              prs[reviewer.login].push(repo.name);
             });
           });
         }
       });
     }
     const sortedKeys = Object.keys(prs).sort();
-    setPrByMember(sortedKeys.map((k) => ({ key: k, value: prs[k], text: k })));
+    setPrByMember(sortedKeys.map((k) => ({
+      key: k, value: k, text: k, description: prs[k].length, data: prs[k]
+    })));
   }
 
 
@@ -69,6 +73,12 @@ const SideFilter = ({ repos, orderedReposCb }) => {
   useEffect(() => {
     if (repos && repos.length) {
       let reposFiltered = JSON.parse(JSON.stringify(repos));
+
+      if (selectedPrMember) {
+        const reposToFilter = new Set(prByMember.find((m) => selectedPrMember === m.key).data);
+        reposFiltered = reposFiltered.filter((r) => reposToFilter.has(r.name));
+      }
+
       if (!isPrivate) {
         reposFiltered = reposFiltered.filter((r) => !r.private);
       }
@@ -99,7 +109,7 @@ const SideFilter = ({ repos, orderedReposCb }) => {
       setCount(0);
       orderedReposCb(repos);
     }
-  }, [repos, sortBy, sortDirection, isPrivate, isPublic, hasPulls, org, selectedRepos]);
+  }, [repos, sortBy, sortDirection, isPrivate, isPublic, hasPulls, org, selectedRepos, selectedPrMember]);
 
   return (
     <Segment>
@@ -158,10 +168,6 @@ const SideFilter = ({ repos, orderedReposCb }) => {
         disabled={repos.length === 0}
         onChange={(e, { value }) => setSelectedRepos(value)}
       />
-      <Divider hidden />
-      <Label color={count === repos.length ? 'grey' : 'blue'}>
-        {`Showing ${count} of ${repos.length} results`}
-      </Label>
       {prByMember && prByMember.length > 0 && (
         <>
           <Divider horizontal>
@@ -170,19 +176,21 @@ const SideFilter = ({ repos, orderedReposCb }) => {
             </Header>
           </Divider>
           <Dropdown
-            button
-            className="icon"
-            floating
-            labeled
-            icon="user secret"
-            text="Find users"
-          >
-            <Dropdown.Menu>
-              {prByMember.map((pr) => <Dropdown.Item key={pr.key} description={pr.value} text={pr.text} />)}
-            </Dropdown.Menu>
-          </Dropdown>
+            clearable
+            placeholder="Lookup user PRs..."
+            selection
+            options={prByMember}
+            noResultsMessage="No results"
+            value={selectedPrMember}
+            disabled={repos.length === 0}
+            onChange={(e, { value }) => setSelectedPrMember(value)}
+          />
         </>
       )}
+      <Divider hidden />
+      <Label color={count === repos.length ? 'grey' : 'blue'}>
+        {`Showing ${count} of ${repos.length} results`}
+      </Label>
 
     </Segment>
   );

@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import {
-  Card, Modal, Button, List, Header, Label, Divider, Segment
+  Card, Modal, Button, Header, Label
 } from 'semantic-ui-react';
-import ReactMarkdown from 'react-markdown';
+import Markdown from 'markdown-to-jsx';
 
 const RepoCard = ({ repo }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,6 +15,13 @@ const RepoCard = ({ repo }) => {
 
   function showPulls() {
     setIsModalOpen(true);
+  }
+
+  function getRequestedReviewers(pull) {
+    if (pull.requested_reviewers && pull.requested_reviewers.length) {
+      return pull.requested_reviewers.map((r) => <Label key={r.id} color="blue">{r.login}</Label>);
+    }
+    return null;
   }
 
   return (
@@ -49,35 +56,19 @@ const RepoCard = ({ repo }) => {
           <Modal.Header>Pull Requests</Modal.Header>
           <Modal.Content>
             {!openPulls.length && <Header as="h3">All good, no pull requests</Header>}
-            {!!openPulls.length && (
-              <List divided relaxed="very" size="large">
-                {openPulls.map((pull) => (
-                  <List.Item key={pull.id}>
-                    <List.Content>
-                      <List.Header as="a" href={pull.html_url} target="__blank">{pull.title}</List.Header>
-                      <List.Description>
-                        <Header sub>
-                          Created
-                          {moment(pull.created_at).fromNow()}
-                        </Header>
-                        {pull.updated_at && (
-                        <Header sub>
-                          Updated
-                          {moment(pull.updated_at).fromNow()}
-                        </Header>
-                        )}
-                        <Divider hidden />
-                        <Header sub>
-                          Reviewers:
-                          {pull.requested_reviewers.map((r) => <Label key={r.id} content={r.login} />)}
-                        </Header>
-                        {pull.body && <Segment><ReactMarkdown source={pull.body} /></Segment>}
-                      </List.Description>
-                    </List.Content>
-                  </List.Item>
-                ))}
-              </List>
-            )}
+            {!!openPulls.length && openPulls.map((pull) => (
+              <Card key={pull.id} fluid>
+                <Card.Content header={pull.title} as="a" href={pull.html_url} target="__blank" />
+                <Card.Content extra>
+                  <span>{`${pull.user.login} created ${moment(pull.created_at).fromNow()}`}</span>
+                  {getRequestedReviewers(pull)}
+                </Card.Content>
+                {/* <Card.Content meta={`${pull.user.login} created ${moment(pull.created_at).fromNow()}`} />
+                <Card.Content meta={`${pull.user.login} created ${moment(pull.created_at).fromNow()}`} /> */}
+                <Card.Content description={<Markdown>{pull.body || ''}</Markdown>} />
+                {pull.updated_at && <Card.Content extra>{`Updated ${moment(pull.updated_at).fromNow()}`}</Card.Content>}
+              </Card>
+            ))}
           </Modal.Content>
         </Modal>
       </Card.Content>

@@ -81,3 +81,7 @@
     flex: 1 0;
     text-align: justify;
 }
+
+.ui.card .content img {
+    max-width: 100%;
+}
