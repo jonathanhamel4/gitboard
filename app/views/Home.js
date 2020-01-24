@@ -1,140 +1,45 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  Icon, Header, Divider, Visibility, Transition
+  Icon, Header, Divider
 } from 'semantic-ui-react';
 import Landing from '../components/Landing';
 import FlexContainer from '../components/FlexContainer';
 
-const duration = 1500;
 export default function Home() {
-  const [visible, setVisible] = useState(new Set());
-
-  function animate(property) {
-    const visibleCopy = new Set(visible);
-    if (visibleCopy.has(property)) {
-      visibleCopy.delete(property);
-    } else {
-      visibleCopy.add(property);
-    }
-    setVisible(visibleCopy);
-  }
-
   return (
     <>
       <Landing />
       <FlexContainer className="main-flex-container">
-        <Icon name="calendar alternate outline" />
+        <Icon name="list alternate outline" />
         <div>
-          <Header as="h2">Some nice feature!!! (1)</Header>
+          <Header as="h2">No repository is missed</Header>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit anim id est laborum.
+            All your organizations and personal repositories are layed out in a searchable and filterable interface.
+            You can easily search all your personal repositories or find public and private repositories for your organizations and teams.
           </p>
         </div>
       </FlexContainer>
       <Divider fitted section />
       <FlexContainer className="main-flex-container">
         <div>
-          <Header as="h2">Some nice feature!!! (2)</Header>
+          <Header as="h2">Keep projects alive</Header>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit anim id est laborum.
+            Easily find projects that have not been active in a long time. The Pushed and Updated filters allow to identify quickly the activity on repositories of an organization.
           </p>
         </div>
-        <Icon name="calendar alternate outline" />
+        <Icon name="clipboard check" />
       </FlexContainer>
       <Divider fitted section />
       <FlexContainer className="main-flex-container">
-        <Icon name="calendar alternate outline" />
+        <Icon name="bullseye" />
         <div>
-          <Header as="h2">Some nice feature!!! (2)</Header>
+          <Header as="h2">Find Pull Requests that need attention</Header>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit anim id est laborum.
+            The dynamic view will highlight any repository that is having a pull request dated by more than a week.
+            The side panel filters allow for easy identification of repositories with pull active requests for your organization and team.
           </p>
         </div>
       </FlexContainer>
-
-      {/* <Visibility once onTopVisible={() => animate('first')}>
-        <Transition.Group animation="fade left" duration={duration}>
-          {visible.has('first') && (
-            <div>
-              <FlexContainer className="main-flex-container">
-                <Icon name="calendar alternate outline" />
-                <div>
-                  <Header as="h2">Some nice feature!!! (1)</Header>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                    mollit anim id est laborum.
-                  </p>
-                </div>
-              </FlexContainer>
-            </div>
-          )}
-        </Transition.Group>
-      </Visibility>
-      <Divider fitted section />
-      <Visibility once onTopVisible={() => animate('second')}>
-        <Transition.Group animation="fade right" duration={duration}>
-          {visible.has('second') && (
-            <div>
-              <FlexContainer className="main-flex-container">
-                <div>
-                  <Header as="h2">Some nice feature!!! (2)</Header>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                    mollit anim id est laborum.
-                  </p>
-                </div>
-                <Icon name="calendar alternate outline" />
-              </FlexContainer>
-            </div>
-          )}
-        </Transition.Group>
-      </Visibility>
-      <Divider fitted section />
-      <Visibility once onTopVisible={() => animate('third')}>
-        <Transition.Group animation="fade left" duration={duration}>
-          {visible.has('third') && (
-            <div>
-              <FlexContainer className="main-flex-container">
-                <Icon name="calendar alternate outline" />
-                <div>
-                  <Header as="h2">Some nice feature!!! (2)</Header>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                    mollit anim id est laborum.
-                  </p>
-                </div>
-              </FlexContainer>
-            </div>
-          )}
-        </Transition.Group>
-      </Visibility> */}
     </>
   );
 }

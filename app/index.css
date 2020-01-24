@@ -89,6 +89,10 @@
     text-align: justify;
 }
 
+.ui.container.flex-container.main-flex-container p {
+    font-size: 1.5em;
+}
+
 .ui.card .content img {
     max-width: 100%;
 }
