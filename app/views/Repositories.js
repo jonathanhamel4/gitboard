@@ -11,6 +11,7 @@ import SideFilter from '../components/SideFilter';
 
 export default function Repositories() {
   const [selectedOrganization, setSelectedOrganization] = useState(null);
+  const [intervalId, setIntervalId] = useState(null);
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -28,6 +29,19 @@ export default function Repositories() {
       return true;
     }
     return false;
+  }
+
+  function clearAndSetNewIntervalId(id = null) {
+    if (intervalId !== null) {
+      window.clearInterval(intervalId);
+    }
+    setIntervalId(id);
+  }
+
+  function setFetchInterval(cb) {
+    // Run the callback every 10 minutes (refresh the data)
+    const interval = window.setInterval(cb, 600000);
+    clearAndSetNewIntervalId(interval);
   }
 
 
@@ -94,11 +108,16 @@ export default function Repositories() {
     setOrgRepositories([]);
     updateQueryString();
     if (onlyUserRepo) {
+      setFetchInterval(fetchUserRepositories);
       await fetchUserRepositories();
     } else if (selectedTeam) {
+      setFetchInterval(fetchOrgTeamRepositories);
       await fetchOrgTeamRepositories();
     } else if (selectedOrganization) {
+      setFetchInterval(fetchOrgRepositories);
       await fetchOrgRepositories();
+    } else {
+      clearAndSetNewIntervalId(null);
     }
     setIsLoading(false);
   }
@@ -108,6 +127,9 @@ export default function Repositories() {
     setSelectedOrganization(queryParameters.get('org'));
     setSelectedTeam(!queryParameters.get('team') || Number.isNaN(queryParameters.get('team')) ? null : parseInt(queryParameters.get('team'), 10));
     setOnlyUserRepo(!!queryParameters.get('userOnly'));
+
+    // cleanup the auto-refresh on componentWillUnmount
+    return () => clearAndSetNewIntervalId(null);
   }, []);
 
   return (
