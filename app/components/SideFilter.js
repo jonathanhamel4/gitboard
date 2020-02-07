@@ -25,8 +25,10 @@ const SideFilter = ({ repos, orderedReposCb }) => {
   const [hasPulls, setHasPulls] = useState(false);
   const [org, setOrg] = useState(null);
   const [selectedRepos, setSelectedRepos] = useState([]);
-  const [count, setCount] = useState(0);
   const [selectedPrMember, setSelectedPrMember] = useState(null);
+
+  // Metadata
+  const [count, setCount] = useState(0);
 
 
   const [prByMember, setPrByMember] = useState([]);
@@ -191,7 +193,6 @@ const SideFilter = ({ repos, orderedReposCb }) => {
       <Label color={count === repos.length ? 'grey' : 'blue'}>
         {`Showing ${count} of ${repos.length} results`}
       </Label>
-
     </Segment>
   );
 };

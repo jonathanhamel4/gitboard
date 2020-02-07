@@ -11,6 +11,7 @@ import Home from './views/Home';
 import Repositories from './views/Repositories';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
+import AuthRoute from './views/AuthRoute';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
       <Navigation />
       <div className="body">
         <Route exact path="/" component={Home} />
-        <Route exact path="/repo" component={Repositories} />
+        <Route exact path="/repo" render={() => <AuthRoute><Repositories /></AuthRoute>} />
       </div>
       <Footer />
     </BrowserRouter>

@@ -3,6 +3,7 @@ import {
   Container, Header, Segment, Form
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import urls from '../apiUrls';
 
 
 export default function Landing() {
@@ -19,7 +20,7 @@ export default function Landing() {
             <Link to="/repo">Repositories</Link>
           </p>
         )}
-        <Form method="post" action="/oauth/install">
+        <Form method="post" action={urls.oauth.install}>
           <Form.Button inverted type="submit">Login with GitHub</Form.Button>
         </Form>
       </Container>

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Dropdown } from 'semantic-ui-react';
-import { toast } from 'react-semantic-toasts';
 
-import getFetch from '../utils/fetch';
+import { getFetch } from '../utils/fetch';
 
 const AsyncDropdown = ({
   source, defaultText, fetchData, onChangeCb, value, keyProp, valueProp, textProp, disabled, errorMessage,
@@ -11,20 +10,9 @@ const AsyncDropdown = ({
   const [menuItems, setMenuItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  function handleError(err, msg) {
-    if (err) {
-      toast({
-        type: 'error', icon: 'warning circle', title: 'Error', description: msg, animation: 'bounce', time: 5000,
-      });
-      console.log(err);
-      return true;
-    }
-    return false;
-  }
-
   async function getData() {
-    const { data, err } = await getFetch(source);
-    if (handleError(err, errorMessage)) {
+    const { data, isError } = await getFetch(source, errorMessage);
+    if (isError) {
       setMenuItems([]);
       return;
     }

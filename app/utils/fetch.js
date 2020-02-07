@@ -1,4 +1,17 @@
-const getFetch = async (uri) => {
+import { toast } from 'react-semantic-toasts';
+
+const handleError = (err, msg) => {
+  if (err) {
+    toast({
+      type: 'error', icon: 'warning circle', title: 'Error', description: msg, animation: 'bounce', time: 5000
+    });
+    console.log(err);
+    return true;
+  }
+  return false;
+};
+
+const getFetch = async (uri, errorMessage) => {
   const options = {
     credentials: 'include',
     cache: 'no-store',
@@ -23,7 +36,9 @@ const getFetch = async (uri) => {
     err = e;
   }
 
-  return { data, err };
+  const isError = handleError(err, errorMessage);
+
+  return { data, isError };
 };
 
-export default getFetch;
+export { handleError, getFetch };

@@ -66,8 +66,6 @@ const RepoCard = ({ repo }) => {
                   <span>{`${pull.user.login} created ${moment(pull.created_at).fromNow()}`}</span>
                   {getRequestedReviewers(pull)}
                 </Card.Content>
-                {/* <Card.Content meta={`${pull.user.login} created ${moment(pull.created_at).fromNow()}`} />
-                <Card.Content meta={`${pull.user.login} created ${moment(pull.created_at).fromNow()}`} /> */}
                 <Card.Content description={<Markdown>{pull.body || ''}</Markdown>} />
                 {pull.updated_at && <Card.Content extra>{`Updated ${moment(pull.updated_at).fromNow()}`}</Card.Content>}
               </Card>

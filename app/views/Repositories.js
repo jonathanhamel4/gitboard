@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 import {
-  Container, Segment, Card, Button, Checkbox, Divider, Loader
+  Container, Segment, Card, Button, Checkbox, Divider, Loader, Label, Icon
 } from 'semantic-ui-react';
-import { toast } from 'react-semantic-toasts';
 
 import AsyncDropdown from '../components/Dropdown';
 import RepoCard from '../components/RepoCard';
-import getFetch from '../utils/fetch';
+import { getFetch } from '../utils/fetch';
 import SideFilter from '../components/SideFilter';
+import urls from '../apiUrls';
 
 export default function Repositories() {
   const [selectedOrganization, setSelectedOrganization] = useState(null);
@@ -19,17 +20,7 @@ export default function Repositories() {
 
   const [orgRepositories, setOrgRepositories] = useState([]);
   const [filteredRepositories, setFilteredRepositories] = useState([]);
-
-  function handleError(err, msg) {
-    if (err) {
-      toast({
-        type: 'error', icon: 'warning circle', title: 'Error', description: msg, animation: 'bounce', time: 5000
-      });
-      console.log(err);
-      return true;
-    }
-    return false;
-  }
+  const [updateTime, setUpdateTime] = useState(null);
 
   function clearAndSetNewIntervalId(id = null) {
     if (intervalId !== null) {
@@ -77,8 +68,8 @@ export default function Repositories() {
   }
 
   async function fetchOrgRepositories() {
-    const { data, err } = await getFetch(`/orgs/${selectedOrganization}/repos?sort=full_name&withPull`);
-    if (handleError(err, 'Error fetching organization repositories')) {
+    const { data, isError } = await getFetch(urls.orgs.repos(selectedOrganization), 'Error fetching organization repositories');
+    if (isError) {
       setOrgRepositories([]);
       return;
     }
@@ -86,8 +77,8 @@ export default function Repositories() {
   }
 
   async function fetchOrgTeamRepositories() {
-    const { data, err } = await getFetch(`/teams/${selectedTeam}/repos?sort=full_name&withPull`);
-    if (handleError(err, 'Error fetching team repositories')) {
+    const { data, isError } = await getFetch(urls.teams.repos(selectedTeam), 'Error fetching team repositories');
+    if (isError) {
       setOrgRepositories([]);
       return;
     }
@@ -95,8 +86,8 @@ export default function Repositories() {
   }
 
   async function fetchUserRepositories() {
-    const { data, err } = await getFetch('/repos/user?sort=full_name&withPull');
-    if (handleError(err, 'Error fetching your repositories')) {
+    const { data, isError } = await getFetch(urls.user.repos, 'Error fetching your repositories');
+    if (isError) {
       setOrgRepositories([]);
       return;
     }
@@ -120,6 +111,7 @@ export default function Repositories() {
       clearAndSetNewIntervalId(null);
     }
     setIsLoading(false);
+    setUpdateTime(moment().format('HH:mm'));
   }
 
   useEffect(() => {
@@ -134,6 +126,7 @@ export default function Repositories() {
 
   return (
     <Container className="push-down-header min-height-100">
+
       <Segment className="filter-segment">
         <div>
           <Checkbox checked={onlyUserRepo} label="My repositories" onChange={(e, { checked }) => onChangeUser(checked)} />
@@ -164,8 +157,11 @@ export default function Repositories() {
           valueProp="id"
           errorMessage="Could not fetch teams"
         />
+        <div>
+          <Button onClick={onSearch}>Search</Button>
+          {updateTime && (<Label color="grey" floating>{updateTime}</Label>)}
+        </div>
 
-        <Button onClick={onSearch}>Search</Button>
       </Segment>
       <Loader size="large" active={isLoading}>Loading Repositories...</Loader>
       <div className="flex-filters-layout">

@@ -40,5 +40,10 @@ router.post('/logout', (req, res) => {
   res.redirect(baseUrl);
 });
 
+router.get('/verify', (req, res) => {
+  const isAuth = !!(req.user && req.user.token);
+  res.json({ isAuth });
+});
+
 
 module.exports = router;

@@ -14,25 +14,18 @@ const validateUser = (req, cookie) => {
 
 const authMiddleware = (req, res, next) => {
   const cookie = req.cookies.authUser;
-
+  validateUser(req, cookie);
   if (req.url.startsWith('/oauth')) {
     next();
-  } else if (req.url === '/') {
-    if (cookie) {
-      validateUser(req, cookie);
-    }
-    next();
-  } else {
-    if (cookie) {
-      validateUser(req, cookie);
-    }
-
-    if (req.user) {
-      next();
-    } else {
-      res.status(401).send();
-    }
+    return;
   }
+
+  if (req.xhr && !req.user) {
+    res.status(401).send();
+    return;
+  }
+
+  next();
 };
 
 module.exports = authMiddleware;
