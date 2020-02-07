@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import {
-  Container, Segment, Card, Button, Checkbox, Divider, Loader, Label, Icon
+  Container, Segment, Card, Button, Checkbox, Divider, Loader, Label
 } from 'semantic-ui-react';
 
 import AsyncDropdown from '../components/Dropdown';

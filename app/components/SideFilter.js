@@ -149,6 +149,7 @@ const SideFilter = ({ repos, orderedReposCb }) => {
       <Checkbox label="Has Pull Requests" checked={hasPulls} onChange={(e, { checked }) => setHasPulls(checked)} />
       <Divider hidden />
       <Dropdown
+        search
         clearable
         placeholder="Organizations..."
         selection
@@ -160,6 +161,7 @@ const SideFilter = ({ repos, orderedReposCb }) => {
       />
       <Divider hidden />
       <Dropdown
+        search
         clearable
         placeholder="Repositories..."
         selection
@@ -178,6 +180,7 @@ const SideFilter = ({ repos, orderedReposCb }) => {
             </Header>
           </Divider>
           <Dropdown
+            search
             clearable
             placeholder="Lookup user PRs..."
             selection

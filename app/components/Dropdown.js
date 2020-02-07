@@ -33,6 +33,7 @@ const AsyncDropdown = ({
 
   return (
     <Dropdown
+      search
       disabled={disabled}
       clearable
       placeholder={defaultText}
