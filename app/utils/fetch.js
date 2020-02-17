@@ -14,10 +14,7 @@ const handleError = (err, msg) => {
 const getFetch = async (uri, errorMessage) => {
   const options = {
     credentials: 'include',
-    cache: 'no-store',
-    headers: {
-      DRW_SSO_NO_REDIRECT: 'true'
-    }
+    cache: 'no-store'
   };
 
   let data = null;
@@ -27,8 +24,6 @@ const getFetch = async (uri, errorMessage) => {
     const result = await fetch(uri, options);
     if (result.ok) {
       data = await result.json();
-    } else if (result.status === 403) {
-      window.location.reload(true);
     } else {
       throw Error(result.statusText);
     }
