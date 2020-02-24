@@ -31,7 +31,10 @@ export default function Repositories() {
 
   function setFetchInterval(cb) {
     // Run the callback every 10 minutes (refresh the data)
-    const interval = window.setInterval(cb, 600000);
+    const interval = window.setInterval(() => {
+      cb();
+      setUpdateTime(moment().format('HH:mm'));
+    }, 600000);
     clearAndSetNewIntervalId(interval);
   }
 
