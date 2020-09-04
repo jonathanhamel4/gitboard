@@ -16,7 +16,7 @@
     "express": "~4.16.1",
     "fs": "0.0.1-security",
     "http-errors": "~1.6.3",
-    "markdown-to-jsx": "^6.10.3",
+    "markdown-to-jsx": "^6.11.4",
     "moment": "^2.24.0",
     "morgan": "~1.9.1",
     "node-fetch": "^2.6.0",
