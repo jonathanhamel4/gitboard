@@ -23,7 +23,7 @@
     "parse-link-header": "^1.0.1",
     "path": "^0.12.7",
     "prop-types": "^15.7.2",
-    "pug": "2.0.0-beta11",
+    "pug": "3.0.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
