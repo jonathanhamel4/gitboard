@@ -19,7 +19,7 @@
     "markdown-to-jsx": "^6.10.3",
     "moment": "^2.24.0",
     "morgan": "~1.9.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "parse-link-header": "^1.0.1",
     "path": "^0.12.7",
     "prop-types": "^15.7.2",
