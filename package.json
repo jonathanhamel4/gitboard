@@ -17,7 +17,7 @@
     "fs": "0.0.1-security",
     "http-errors": "~1.6.3",
     "markdown-to-jsx": "^6.10.3",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "morgan": "~1.9.1",
     "node-fetch": "^2.6.0",
     "parse-link-header": "^1.0.1",
